@@ -33,7 +33,6 @@ type Pod struct {
 
 // getPodPhaseStatus returns the pod status depending upon its containers' statuses
 func getPodPhaseStatus(pod apiv1.Pod) string {
-	log.Printf("Getting the pod status, Pod: %s\n", pod.ObjectMeta.Name)
 	containerStatuses := pod.Status.ContainerStatuses
 	for index := 0; index < len(containerStatuses); index++ {
 		// returning the reason if a container is in waiting state.
@@ -49,7 +48,6 @@ func getPodPhaseStatus(pod apiv1.Pod) string {
 // getPodRestartCount returns the restart count of a pod.
 // Restart Count is the sum of the restart counts of all the containers present in the given pod.
 func getPodRestartCount(pod apiv1.Pod) int32 {
-	log.Println("Getting the pod restart count, Pod: %s", pod.ObjectMeta.Name)
 	containerStatuses := pod.Status.ContainerStatuses
 	var restartCount int32
 	for index := 0; index < len(containerStatuses); index++ {
@@ -64,7 +62,7 @@ func GetPods(namespace string) []Pod {
 	if namespace == "" {
 		namespace = defaultNamespace
 	}
-	log.Println("Getting the pods information, Namespace: %s", namespace)
+	log.Printf("Getting the pods information, Namespace: %s\n", namespace)
 	var pods []Pod
 
 	// (TODO) Incluster or an Out-of-cluster Configuration can be initialized.
