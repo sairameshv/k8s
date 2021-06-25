@@ -40,16 +40,22 @@ NewClient is a constructor function which initializes and returns the client
 that can interact with the Kubernetes API based on the provided configuration
 type
 
+#### func (*Client) GetEvents
+
+```go
+func (cli *Client) GetEvents(namespace string) interface{}
+```
+GetEvents is an API to fetch the events that were recorded in the kubernetes
+cluster "namespace" defaults to the "default" if provided as an empty string("")
+
 #### func (*Client) GetPods
 
 ```go
 func (cli *Client) GetPods(namespace string) []Pod
 ```
-GetPods is an API to initialize the connection with Kubernetes and fetch the
-details of all the pods present in a given "namespace". namespace defaults to
-the "default" if the argument passed is an empty string ("") (TODO) This can be
-modified as a handler function incase if a REST server is exposed towards the
-user
+GetPods is an API to fetch the details of all the pods present in a given
+"namespace". namespace defaults to the "default" if the argument passed is an
+empty string ("")
 
 #### type Pod
 

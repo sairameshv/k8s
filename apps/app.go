@@ -123,8 +123,7 @@ func getPodRestartCount(pod apiv1.Pod) int32 {
 	return restartCount
 }
 
-// GetPods is an API to initialize the connection with Kubernetes and fetch the details of all the pods present in a given "namespace". namespace defaults to the "default" if the argument passed is an empty string ("")
-// (TODO) This can be modified as a handler function incase if a REST server is exposed towards the user
+// GetPods is an API to fetch the details of all the pods present in a given "namespace". namespace defaults to the "default" if the argument passed is an empty string ("")
 func (cli *Client) GetPods(namespace string) []Pod {
 	if namespace == "" {
 		namespace = defaultNamespace
@@ -135,9 +134,9 @@ func (cli *Client) GetPods(namespace string) []Pod {
 	// Getting Pod information
 	response, err := cli.CoreV1().Pods(namespace).List(context.TODO(), metav1.ListOptions{})
 	if err != nil {
-                log.Printf("Failed getting response from k8s API, Err: %v", err)
-                return nil
-        }
+		log.Printf("Failed getting response from k8s API, Err: %v", err)
+		return nil
+	}
 	for _, info := range response.Items {
 		pod := new(Pod)
 		pod.Name = info.ObjectMeta.Name
@@ -148,4 +147,19 @@ func (cli *Client) GetPods(namespace string) []Pod {
 	}
 	log.Printf("Fetched information successfully, Info: %v\n", pods)
 	return pods
+}
+
+// GetEvents is an API to fetch the events that were recorded in the kubernetes cluster
+// "namespace" defaults to the "default" if provided as an empty string("")
+func (cli *Client) GetEvents(namespace string) interface{} {
+	if namespace == "" {
+		namespace = defaultNamespace
+	}
+	log.Printf("Getting the events information, Namespace: %s\n", namespace)
+	events, err := cli.CoreV1().Events(namespace).List(context.TODO(), metav1.ListOptions{})
+	if err != nil {
+		log.Printf("Failed getting response from k8s API, Err: %v", err)
+		return nil
+	}
+	return events
 }
