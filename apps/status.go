@@ -70,14 +70,14 @@ func GetPods(namespace string) []Pod {
 	// (TODO) As of now, proceeding with the creation of an In-Cluster configuration which limits user scope to call this API only from within the kubernetes cluster
 	config, err := rest.InClusterConfig()
 	if err != nil {
-		log.Println("Creating InCluster Configuration failed, Error: %v", err)
+		log.Printf("Creating InCluster Configuration failed, Error: %v\n", err)
 		return nil
 	}
 
 	// Creating a clientset
 	clientset, err := kubernetes.NewForConfig(config)
 	if err != nil {
-		log.Println("Clientset creation failed, Error: %v", err)
+		log.Printf("Clientset creation failed, Error: %v\n", err)
 		return nil
 	}
 
@@ -91,6 +91,6 @@ func GetPods(namespace string) []Pod {
 		pod.UpTime = float64(time.Now().Unix() - info.Status.StartTime.Unix())
 		pods = append(pods, *pod)
 	}
-	log.Println("Fetched information successfully, Info: %v", pods)
+	log.Printf("Fetched information successfully, Info: %v\n", pods)
 	return pods
 }

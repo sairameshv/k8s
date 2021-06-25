@@ -1,6 +1,6 @@
 # apps
 --
-    import "k8s-apps/"
+    import "k8s/apps"
 
 Package apps exposes a few handy APIs which interact and retrieve information
 from the kubernetes cluster
