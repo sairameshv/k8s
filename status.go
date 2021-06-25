@@ -33,7 +33,7 @@ type Pod struct {
 
 // getPodPhaseStatus returns the pod status depending upon its containers' statuses
 func getPodPhaseStatus(pod apiv1.Pod) string {
-	log.Println("Getting the pod status, Pod: %s", pod.ObjectMeta.Name)
+	log.Printf("Getting the pod status, Pod: %s\n", pod.ObjectMeta.Name)
 	containerStatuses := pod.Status.ContainerStatuses
 	for index := 0; index < len(containerStatuses); index++ {
 		// returning the reason if a container is in waiting state.
